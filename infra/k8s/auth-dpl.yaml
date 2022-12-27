@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: auth-dpl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+    templates:
+      metadata:
+        labels:
+          app: auth
+      spec:
+        containers:
+          - name: auth
+            image: abhi149209/auth
+
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: auth-srv
+spec:
+  selector:
+    app: auth
+  ports:
+    - name: auth
+      protocol: TCP
+      port: 3000
+      targetPort: 3000    
